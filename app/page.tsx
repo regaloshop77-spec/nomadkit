@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import Image from 'next/image'
 import { countries } from '../data/countries'
 
 const features = [
@@ -57,8 +58,15 @@ export default function Home() {
               className="group flex flex-col items-center bg-white border border-gray-200 rounded-2xl overflow-hidden hover:shadow-lg hover:border-gray-300 transition-all duration-200"
             >
               {/* 国旗エリア */}
-              <div className="w-full bg-gray-50 flex items-center justify-center py-6 group-hover:bg-gray-100 transition-colors duration-200">
-                <span className="text-6xl leading-none">{country.flag}</span>
+              <div className="w-full bg-gray-50 flex items-center justify-center py-5 group-hover:bg-gray-100 transition-colors duration-200">
+                <Image
+                  src={`https://flagcdn.com/w160/${country.id}.png`}
+                  alt={country.name}
+                  width={80}
+                  height={60}
+                  className="rounded shadow-sm object-cover"
+                  unoptimized
+                />
               </div>
               {/* 国名エリア */}
               <div className="w-full px-2 py-3 text-center border-t border-gray-100">
