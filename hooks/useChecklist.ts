@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from 'react'
-import type { Task, ChecklistState } from '../types'
+import type { Task, ChecklistState, CustomTask } from '../types'
 
 interface UseChecklistReturn {
   checkedState: ChecklistState
@@ -9,48 +9,117 @@ interface UseChecklistReturn {
   progressPercent: number
   isAllCompleted: boolean
   resetChecklist: () => void
+
+  subTaskCheckedState: { [subTaskId: string]: boolean }
+  toggleSubTask: (subTaskId: string) => void
+
+  totalEstimatedCost: number
+  checkedTaskCosts: { taskId: string; title: string; cost: number }[]
+
+  customTasks: CustomTask[]
+  addCustomTask: (task: Omit<CustomTask, 'id' | 'createdAt' | 'isChecked'>) => void
+  toggleCustomTask: (taskId: string) => void
+  deleteCustomTask: (taskId: string) => void
+}
+
+function persist(key: string, value: unknown) {
+  try {
+    localStorage.setItem(key, JSON.stringify(value))
+  } catch {
+    // ignore
+  }
+}
+
+function load<T>(key: string, fallback: T): T {
+  try {
+    const stored = localStorage.getItem(key)
+    if (stored) return JSON.parse(stored) as T
+  } catch {
+    // ignore
+  }
+  return fallback
 }
 
 export function useChecklist(countryId: string, tasks: Task[]): UseChecklistReturn {
-  const storageKey = `nomadkit_checklist_${countryId}`
+  const checkKey = `nomadkit_checklist_${countryId}`
+  const subKey   = `nomadkit_subtasks_${countryId}`
+  const customKey = `nomadkit_custom_${countryId}`
+
   const [checkedState, setCheckedState] = useState<ChecklistState>({})
+  const [subTaskCheckedState, setSubTaskCheckedState] = useState<{ [id: string]: boolean }>({})
+  const [customTasks, setCustomTasks] = useState<CustomTask[]>([])
 
   useEffect(() => {
-    try {
-      const stored = localStorage.getItem(storageKey)
-      if (stored) {
-        setCheckedState(JSON.parse(stored) as ChecklistState)
-      }
-    } catch {
-      // localStorage が使えない環境では無視
-    }
-  }, [storageKey])
+    setCheckedState(load(checkKey, {}))
+    setSubTaskCheckedState(load(subKey, {}))
+    setCustomTasks(load(customKey, []))
+  }, [checkKey, subKey, customKey])
 
+  // --- main task ---
   const toggleTask = useCallback((taskId: string) => {
     setCheckedState(prev => {
       const next = { ...prev, [taskId]: !prev[taskId] }
-      try {
-        localStorage.setItem(storageKey, JSON.stringify(next))
-      } catch {
-        // ignore
-      }
+      persist(checkKey, next)
       return next
     })
-  }, [storageKey])
+  }, [checkKey])
 
   const resetChecklist = useCallback(() => {
     setCheckedState({})
-    try {
-      localStorage.removeItem(storageKey)
-    } catch {
-      // ignore
-    }
-  }, [storageKey])
+    try { localStorage.removeItem(checkKey) } catch {}
+  }, [checkKey])
 
+  // --- sub task ---
+  const toggleSubTask = useCallback((subTaskId: string) => {
+    setSubTaskCheckedState(prev => {
+      const next = { ...prev, [subTaskId]: !prev[subTaskId] }
+      persist(subKey, next)
+      return next
+    })
+  }, [subKey])
+
+  // --- custom task ---
+  const addCustomTask = useCallback((input: Omit<CustomTask, 'id' | 'createdAt' | 'isChecked'>) => {
+    const newTask: CustomTask = {
+      ...input,
+      id: `custom_${Date.now()}`,
+      createdAt: new Date().toISOString().slice(0, 10),
+      isChecked: false,
+    }
+    setCustomTasks(prev => {
+      const next = [...prev, newTask]
+      persist(customKey, next)
+      return next
+    })
+  }, [customKey])
+
+  const toggleCustomTask = useCallback((taskId: string) => {
+    setCustomTasks(prev => {
+      const next = prev.map(t => t.id === taskId ? { ...t, isChecked: !t.isChecked } : t)
+      persist(customKey, next)
+      return next
+    })
+  }, [customKey])
+
+  const deleteCustomTask = useCallback((taskId: string) => {
+    setCustomTasks(prev => {
+      const next = prev.filter(t => t.id !== taskId)
+      persist(customKey, next)
+      return next
+    })
+  }, [customKey])
+
+  // --- derived ---
   const totalCount = tasks.length
   const completedCount = tasks.filter(t => checkedState[t.id]).length
   const progressPercent = totalCount === 0 ? 0 : Math.round((completedCount / totalCount) * 100)
   const isAllCompleted = totalCount > 0 && completedCount === totalCount
+
+  const checkedTaskCosts = tasks
+    .filter(t => checkedState[t.id] && t.estimatedCost && t.estimatedCost.max > 0)
+    .map(t => ({ taskId: t.id, title: t.title, cost: t.estimatedCost!.max }))
+
+  const totalEstimatedCost = checkedTaskCosts.reduce((sum, t) => sum + t.cost, 0)
 
   return {
     checkedState,
@@ -60,5 +129,13 @@ export function useChecklist(countryId: string, tasks: Task[]): UseChecklistRetu
     progressPercent,
     isAllCompleted,
     resetChecklist,
+    subTaskCheckedState,
+    toggleSubTask,
+    totalEstimatedCost,
+    checkedTaskCosts,
+    customTasks,
+    addCustomTask,
+    toggleCustomTask,
+    deleteCustomTask,
   }
 }
