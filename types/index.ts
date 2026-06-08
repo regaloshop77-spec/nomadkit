@@ -11,25 +11,54 @@ export interface AffiliateLink {
   url: string
 }
 
+export interface SubTask {
+  id: string
+  title: string
+  isOptional?: boolean
+}
+
 export interface Task {
   id: string
   title: string
   desc: string
   timing: Timing
-  deadline?: string           // 例: "就労前までに" "入国後90日以内"
+  deadline?: string
   requiresOfficialConfirm: boolean
   officialLinks: OfficialLink[]
   affiliate?: AffiliateLink
   isCommon: boolean
-  updatedAt: string           // "YYYY-MM-DD" 形式
+  updatedAt: string
+
+  subTasks?: SubTask[]
+  estimatedCost?: {
+    min: number
+    max: number
+    currency?: string
+    note?: string
+  }
+  estimatedDays?: {
+    min: number
+    max: number
+    note?: string
+  }
 }
 
 export interface Country {
-  id: string        // "au" "ca" など
-  name: string      // "オーストラリア"
-  flag: string      // "🇦🇺"
+  id: string
+  name: string
+  flag: string
 }
 
 export interface ChecklistState {
-  [taskId: string]: boolean   // taskId: 完了フラグ
+  [taskId: string]: boolean
+}
+
+export interface CustomTask {
+  id: string                // "custom_" + timestamp
+  title: string
+  memo?: string
+  timing: Timing
+  estimatedCost?: number    // ユーザーが入力した費用（円）
+  isChecked: boolean
+  createdAt: string         // "YYYY-MM-DD"
 }

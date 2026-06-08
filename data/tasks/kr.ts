@@ -13,6 +13,14 @@ export const krTasks: Task[] = [
     ],
     isCommon: false,
     updatedAt: '2025-06-01',
+    subTasks: [
+      { id: 'kr_arc_book', title: '出入国・外国人庁のウェブサイトで予約を取る' },
+      { id: 'kr_arc_docs', title: 'パスポート・写真・住所証明・申請料を準備する' },
+      { id: 'kr_arc_apply', title: '窓口で申請手続きを行う' },
+      { id: 'kr_arc_receive', title: '外国人登録証を受け取る（郵送または窓口受取）' },
+    ],
+    estimatedCost: { min: 3000, max: 4000, note: '申請料 ₩30,000程度（円換算は為替による）' },
+    estimatedDays: { min: 14, max: 28, note: '申請から発行まで2〜4週間' },
   },
   {
     id: 'kr_bank',
@@ -23,6 +31,14 @@ export const krTasks: Task[] = [
     officialLinks: [],
     isCommon: false,
     updatedAt: '2025-06-01',
+    subTasks: [
+      { id: 'kr_bank_compare', title: 'カカオバンク・ウリィ銀行・国民銀行等を比較する' },
+      { id: 'kr_bank_docs', title: 'パスポート・外国人登録証・住所証明を準備する' },
+      { id: 'kr_bank_open', title: '支店またはアプリで口座を開設する' },
+      { id: 'kr_bank_card', title: '体크카드（デビットカード）を受け取る' },
+    ],
+    estimatedCost: { min: 0, max: 0, note: '無料' },
+    estimatedDays: { min: 1, max: 3, note: '外国人登録証取得後に即日〜数日で開設可能' },
   },
   {
     id: 'kr_health',
@@ -35,6 +51,13 @@ export const krTasks: Task[] = [
     ],
     isCommon: false,
     updatedAt: '2025-06-01',
+    subTasks: [
+      { id: 'kr_health_check', title: '6ヶ月以上滞在の場合は強制加入対象であることを確認する' },
+      { id: 'kr_health_apply', title: '国民健康保険公団の支社で手続きする' },
+      { id: 'kr_health_card', title: '保険証を受け取る' },
+    ],
+    estimatedCost: { min: 5000, max: 15000, note: '月額。所得・年齢によって異なる' },
+    estimatedDays: { min: 1, max: 3, note: '窓口で当日〜数日で手続き完了' },
   },
   {
     id: 'kr_language',
@@ -45,5 +68,12 @@ export const krTasks: Task[] = [
     officialLinks: [],
     isCommon: false,
     updatedAt: '2025-06-01',
+    subTasks: [
+      { id: 'kr_lang_hangul', title: 'ハングルの読み書きをマスターする（2〜4週間）' },
+      { id: 'kr_lang_basics', title: '挨拶・数字・買い物の基本フレーズを習得する' },
+      { id: 'kr_lang_app', title: 'Duolingo・TOPIK教材等で語彙を増やす' },
+    ],
+    estimatedCost: { min: 0, max: 20000, note: 'アプリは無料。教材・語学学校は別途' },
+    estimatedDays: { min: 14, max: 90, note: 'ハングル習得2〜4週間。日常会話まで2〜3ヶ月' },
   },
 ]

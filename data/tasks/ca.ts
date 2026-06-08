@@ -12,6 +12,14 @@ export const caTasks: Task[] = [
     ],
     isCommon: false,
     updatedAt: '2025-06-01',
+    subTasks: [
+      { id: 'ca_iec_account', title: 'IRCCのオンラインアカウントを作成する' },
+      { id: 'ca_iec_profile', title: 'IECプールにプロフィールを登録する' },
+      { id: 'ca_iec_invite', title: '招待状（ITA）を待つ' },
+      { id: 'ca_iec_apply', title: '招待状受領後にワークパーミットを申請する' },
+    ],
+    estimatedCost: { min: 27000, max: 30000, note: 'オープンワークパーミット申請料 CAD300程度（円換算は為替による）' },
+    estimatedDays: { min: 14, max: 180, note: '抽選結果まで数週間〜数ヶ月。その後ビザ審査に数週間' },
   },
   {
     id: 'ca_sin',
@@ -25,6 +33,13 @@ export const caTasks: Task[] = [
     ],
     isCommon: false,
     updatedAt: '2025-06-01',
+    subTasks: [
+      { id: 'ca_sin_docs', title: '必要書類（パスポート・ワークパーミット）を準備する' },
+      { id: 'ca_sin_apply', title: 'Service Canadaのオフィスで申請する（または郵送申請）' },
+      { id: 'ca_sin_receive', title: 'SINレターを受け取り番号を安全に保管する' },
+    ],
+    estimatedCost: { min: 0, max: 0, note: '無料' },
+    estimatedDays: { min: 1, max: 5, note: 'オフィス申請は即日。郵送は数日かかる場合あり' },
   },
   {
     id: 'ca_health',
@@ -37,6 +52,13 @@ export const caTasks: Task[] = [
     ],
     isCommon: false,
     updatedAt: '2025-06-01',
+    subTasks: [
+      { id: 'ca_health_check', title: '居住予定の州の医療保険を確認する' },
+      { id: 'ca_health_wait', title: '待機期間（最長3ヶ月）がある場合は民間保険で補完する' },
+      { id: 'ca_health_apply', title: '州の医療保険カードを申請する' },
+    ],
+    estimatedCost: { min: 0, max: 10000, note: '州医療保険は無料〜月額数千円。待機期間中の民間保険は別途必要' },
+    estimatedDays: { min: 1, max: 90, note: '待機期間は州により異なる（BC州・オンタリオ州等は3ヶ月）' },
   },
   {
     id: 'ca_bank',
@@ -47,5 +69,13 @@ export const caTasks: Task[] = [
     officialLinks: [],
     isCommon: false,
     updatedAt: '2025-06-01',
+    subTasks: [
+      { id: 'ca_bank_compare', title: 'TD・RBC・Scotiabank等を比較する' },
+      { id: 'ca_bank_docs', title: 'パスポート・SIN・住所証明を準備する' },
+      { id: 'ca_bank_open', title: '支店またはオンラインで口座を開設する' },
+      { id: 'ca_bank_debit', title: 'Interacデビットカードを受け取り有効化する' },
+    ],
+    estimatedCost: { min: 0, max: 2000, note: '月額手数料無料〜有料プランあり' },
+    estimatedDays: { min: 1, max: 7, note: '即日〜カード到着まで最大1週間' },
   },
 ]

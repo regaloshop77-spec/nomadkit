@@ -12,6 +12,14 @@ export const frTasks: Task[] = [
     ],
     isCommon: false,
     updatedAt: '2025-06-01',
+    subTasks: [
+      { id: 'fr_visa_check', title: '在日フランス大使館のウェブサイトで最新の必要書類を確認する' },
+      { id: 'fr_visa_docs', title: 'パスポート・証明写真・資金証明・保険証明等を準備する' },
+      { id: 'fr_visa_book', title: 'ビザ申請センターで予約を取る' },
+      { id: 'fr_visa_submit', title: '書類を提出しビザを申請する' },
+    ],
+    estimatedCost: { min: 0, max: 0, note: 'ビザ申請料無料。ただしビザ申請センター手数料が別途かかる場合あり' },
+    estimatedDays: { min: 14, max: 56, note: '申請から発行まで2〜8週間' },
   },
   {
     id: 'fr_ofii',
@@ -25,6 +33,14 @@ export const frTasks: Task[] = [
     ],
     isCommon: false,
     updatedAt: '2025-06-01',
+    subTasks: [
+      { id: 'fr_ofii_online', title: 'OFIIのオンラインポータルで手続きを開始する' },
+      { id: 'fr_ofii_docs', title: '必要書類（パスポート・ビザ・住所証明）を準備する' },
+      { id: 'fr_ofii_pay', title: '手続き費用を支払う' },
+      { id: 'fr_ofii_complete', title: '在留許可のスタンプ（Visa Long Séjour valant Titre de Séjour）の確認' },
+    ],
+    estimatedCost: { min: 30000, max: 35000, note: '€200程度（円換算は為替による）' },
+    estimatedDays: { min: 1, max: 90, note: '入国後3ヶ月以内に手続き完了' },
   },
   {
     id: 'fr_caf',
@@ -37,6 +53,13 @@ export const frTasks: Task[] = [
     ],
     isCommon: false,
     updatedAt: '2025-06-01',
+    subTasks: [
+      { id: 'fr_caf_check', title: 'APL（住宅補助）の対象かどうか確認する' },
+      { id: 'fr_caf_account', title: 'CAFのウェブサイトでアカウントを作成する' },
+      { id: 'fr_caf_apply', title: '入居後すぐに申請する（申請月から支給開始）' },
+    ],
+    estimatedCost: { min: 0, max: 0, note: '申請は無料。補助額は収入・家賃により異なる' },
+    estimatedDays: { min: 30, max: 90, note: '申請から給付開始まで1〜3ヶ月' },
   },
   {
     id: 'fr_language',
@@ -47,5 +70,12 @@ export const frTasks: Task[] = [
     officialLinks: [],
     isCommon: false,
     updatedAt: '2025-06-01',
+    subTasks: [
+      { id: 'fr_lang_app', title: 'DuolingoやBabbel等で基礎を学ぶ' },
+      { id: 'fr_lang_basics', title: '挨拶・カフェ・レストランでの表現を習得する' },
+      { id: 'fr_lang_course', title: '現地のアリアンス・フランセーズで語学コースを受講する', isOptional: true },
+    ],
+    estimatedCost: { min: 0, max: 50000, note: 'アプリは無料〜月額数百円。語学コースは数万円〜' },
+    estimatedDays: { min: 30, max: 180, note: '基礎（A1）習得まで1〜6ヶ月' },
   },
 ]

@@ -12,6 +12,14 @@ export const commonTasks: Task[] = [
     ],
     isCommon: true,
     updatedAt: '2025-06-01',
+    subTasks: [
+      { id: 'passport_check_expiry', title: '現在のパスポートの有効期限を確認する' },
+      { id: 'passport_check_period', title: '残存有効期間が滞在期間＋6ヶ月以上あるか確認する' },
+      { id: 'passport_apply', title: '必要な場合は更新申請を行う（戸籍謄本・写真・手数料を準備）' },
+      { id: 'passport_receive', title: '新しいパスポートを受け取る' },
+    ],
+    estimatedCost: { min: 0, max: 16000, note: '更新が必要な場合のみ。10年用：16,000円、5年用：11,000円' },
+    estimatedDays: { min: 7, max: 21, note: '申請から受け取りまで通常1〜3週間' },
   },
   {
     id: 'common_visa_check',
@@ -24,6 +32,14 @@ export const commonTasks: Task[] = [
     ],
     isCommon: true,
     updatedAt: '2025-06-01',
+    subTasks: [
+      { id: 'visa_check_age', title: '年齢制限（一般的に18〜30歳）を満たしているか確認する' },
+      { id: 'visa_check_quota', title: '定員・抽選制かどうかを確認する' },
+      { id: 'visa_check_period', title: '申請受付期間・開始日を確認する' },
+      { id: 'visa_check_conditions', title: 'ビザ条件（健康診断・犯罪歴・資金証明）を確認する' },
+    ],
+    estimatedCost: { min: 0, max: 0, note: '確認作業のみ。費用は不要' },
+    estimatedDays: { min: 1, max: 3, note: '情報収集・確認作業の目安' },
   },
   {
     id: 'common_insurance',
@@ -37,6 +53,15 @@ export const commonTasks: Task[] = [
     affiliate: { label: 'おすすめ海外保険を見る', url: 'https://example.com/insurance' },
     isCommon: true,
     updatedAt: '2025-06-01',
+    subTasks: [
+      { id: 'insurance_compare', title: '複数の保険会社のプランを比較する' },
+      { id: 'insurance_check_coverage', title: '補償内容（医療・賠償・携行品）を確認する' },
+      { id: 'insurance_check_visa', title: '渡航先のビザ申請に保険加入証明が必要か確認する' },
+      { id: 'insurance_apply', title: '保険に申し込む' },
+      { id: 'insurance_save_doc', title: '加入証明書をデジタル・紙の両方で保管する' },
+    ],
+    estimatedCost: { min: 30000, max: 200000, note: '滞在期間・補償内容により大きく異なる' },
+    estimatedDays: { min: 1, max: 7, note: '即日〜1週間で加入証明書が発行される' },
   },
   {
     id: 'common_flight',
@@ -47,6 +72,14 @@ export const commonTasks: Task[] = [
     officialLinks: [],
     isCommon: true,
     updatedAt: '2025-06-01',
+    subTasks: [
+      { id: 'flight_check_oneway', title: '片道・往復どちらにするか検討する（入国審査の要件を確認）' },
+      { id: 'flight_compare', title: '複数の航空会社・予約サイトで料金を比較する' },
+      { id: 'flight_book', title: '航空券を購入する' },
+      { id: 'flight_save', title: 'eチケットを保存・印刷する' },
+    ],
+    estimatedCost: { min: 80000, max: 300000, note: '渡航先・時期・購入タイミングにより異なる' },
+    estimatedDays: { min: 1, max: 1, note: '購入後即日発行' },
   },
   {
     id: 'common_funds',
@@ -57,6 +90,14 @@ export const commonTasks: Task[] = [
     officialLinks: [],
     isCommon: true,
     updatedAt: '2025-06-01',
+    subTasks: [
+      { id: 'funds_calc', title: '必要な総資金を計算する（ビザ費用＋航空券＋初期生活費3〜6ヶ月分）' },
+      { id: 'funds_check_balance', title: '現在の貯金額を確認する' },
+      { id: 'funds_plan', title: '渡航日までの貯金計画を立てる' },
+      { id: 'funds_certificate', title: '残高証明書の取得方法を確認する（ビザ申請に必要な場合）' },
+    ],
+    estimatedCost: { min: 500000, max: 1500000, note: '渡航先・滞在期間・生活スタイルにより異なる。最低3ヶ月分の生活費が目安' },
+    estimatedDays: { min: 1, max: 3, note: '残高証明書の発行は銀行により異なる（即日〜1週間）' },
   },
   {
     id: 'common_creditcard',
@@ -68,6 +109,14 @@ export const commonTasks: Task[] = [
     affiliate: { label: 'おすすめ海外カードを見る', url: 'https://example.com/card' },
     isCommon: true,
     updatedAt: '2025-06-01',
+    subTasks: [
+      { id: 'card_compare', title: '海外手数料無料のカードを比較する（VISA/Mastercard推奨）' },
+      { id: 'card_apply', title: 'カードを申し込む（発行に2〜3週間かかる）' },
+      { id: 'card_activate', title: 'カードを有効化・暗証番号を設定する' },
+      { id: 'card_test', title: '少額決済でカードが使えるか確認する' },
+    ],
+    estimatedCost: { min: 0, max: 15000, note: '年会費無料〜有料カードあり' },
+    estimatedDays: { min: 14, max: 21, note: '申し込みからカード到着まで2〜3週間' },
   },
   {
     id: 'common_sim',
@@ -79,6 +128,14 @@ export const commonTasks: Task[] = [
     affiliate: { label: 'eSIMを見る', url: 'https://example.com/sim' },
     isCommon: true,
     updatedAt: '2025-06-01',
+    subTasks: [
+      { id: 'sim_check_device', title: 'スマホがSIMフリーかどうか確認する' },
+      { id: 'sim_compare', title: '現地SIM・eSIMのプランを比較する（Airalo等）' },
+      { id: 'sim_purchase', title: 'SIM・eSIMを購入する' },
+      { id: 'sim_setup', title: '設定方法を事前に確認しておく（到着直後に使えるよう）' },
+    ],
+    estimatedCost: { min: 1000, max: 8000, note: '容量・期間によりブランドにより異なる' },
+    estimatedDays: { min: 1, max: 3, note: 'eSIMは即時発行。物理SIMは配送に数日かかる場合あり' },
   },
   {
     id: 'common_vpn',
@@ -90,6 +147,13 @@ export const commonTasks: Task[] = [
     affiliate: { label: 'おすすめVPNを見る', url: 'https://example.com/vpn' },
     isCommon: true,
     updatedAt: '2025-06-01',
+    subTasks: [
+      { id: 'vpn_research', title: '信頼性の高いVPNサービスを選ぶ' },
+      { id: 'vpn_install', title: 'アプリをインストールして動作確認する' },
+      { id: 'vpn_test', title: '日本のサービス（Netflix・AbemaTV等）にアクセスできるか確認する' },
+    ],
+    estimatedCost: { min: 500, max: 2000, note: '月額。年間契約で割安になるサービスが多い' },
+    estimatedDays: { min: 1, max: 1, note: '即日利用可能' },
   },
   {
     id: 'common_intl_license',
@@ -100,6 +164,13 @@ export const commonTasks: Task[] = [
     officialLinks: [],
     isCommon: true,
     updatedAt: '2025-06-01',
+    subTasks: [
+      { id: 'license_check_need', title: '渡航先で運転する予定があるか確認する' },
+      { id: 'license_check_valid', title: '現在の運転免許証の有効期限を確認する' },
+      { id: 'license_apply', title: '運転免許センター・警察署で国際免許証を申請する（即日発行）' },
+    ],
+    estimatedCost: { min: 2350, max: 2350, note: '申請手数料2,350円（全国一律）' },
+    estimatedDays: { min: 1, max: 1, note: '申請当日に発行される' },
   },
   {
     id: 'common_juminhy',
@@ -112,6 +183,15 @@ export const commonTasks: Task[] = [
     ],
     isCommon: true,
     updatedAt: '2025-06-01',
+    subTasks: [
+      { id: 'jumin_check_period', title: '渡航期間が1年以上か確認する（1年以上で転出届が必要）' },
+      { id: 'jumin_tenshutsu', title: '市区町村役所で海外転出届を提出する' },
+      { id: 'jumin_nenkin', title: '国民年金の手続きを行う（任意加入・免除・脱退一時金）' },
+      { id: 'jumin_kenko', title: '国民健康保険の脱退手続きを行う' },
+      { id: 'jumin_mynumber', title: 'マイナンバーカードの取り扱いを確認する' },
+    ],
+    estimatedCost: { min: 0, max: 0, note: '手続き自体は無料' },
+    estimatedDays: { min: 1, max: 1, note: '役所の窓口で当日完了' },
   },
   {
     id: 'common_zaigai',
@@ -124,6 +204,13 @@ export const commonTasks: Task[] = [
     ],
     isCommon: true,
     updatedAt: '2025-06-01',
+    subTasks: [
+      { id: 'zaigai_orrnet', title: 'ORRnetにアクセスしてアカウントを作成する' },
+      { id: 'zaigai_submit', title: '在留届を電子申請する（渡航3ヶ月以内に提出）' },
+      { id: 'zaigai_embassy', title: '渡航先の在外公館の連絡先を確認・保存する' },
+    ],
+    estimatedCost: { min: 0, max: 0, note: '無料' },
+    estimatedDays: { min: 1, max: 1, note: 'オンラインで即日完了' },
   },
   {
     id: 'common_sim_activate',
@@ -134,6 +221,13 @@ export const commonTasks: Task[] = [
     officialLinks: [],
     isCommon: true,
     updatedAt: '2025-06-01',
+    subTasks: [
+      { id: 'sim_act_insert', title: 'SIMを挿入またはeSIMを有効化する' },
+      { id: 'sim_act_call', title: '通話ができるか確認する' },
+      { id: 'sim_act_data', title: 'データ通信ができるか確認する' },
+    ],
+    estimatedCost: { min: 0, max: 0, note: '渡航前購入済みの場合は追加費用なし' },
+    estimatedDays: { min: 1, max: 1, note: '空港到着後すぐに確認' },
   },
   {
     id: 'common_housing',
@@ -144,6 +238,14 @@ export const commonTasks: Task[] = [
     officialLinks: [],
     isCommon: true,
     updatedAt: '2025-06-01',
+    subTasks: [
+      { id: 'housing_research', title: 'シェアハウス・ゲストハウス・ホームステイの違いを理解する' },
+      { id: 'housing_first', title: '到着直後の短期滞在先（1〜2週間）を予約しておく' },
+      { id: 'housing_budget', title: '家賃の予算を決める（現地の相場を事前調査）' },
+      { id: 'housing_scam', title: '詐欺物件の見分け方を確認する' },
+    ],
+    estimatedCost: { min: 50000, max: 200000, note: '国・地域・タイプにより異なる（月額）' },
+    estimatedDays: { min: 7, max: 30, note: '短期滞在を起点に1〜4週間で本格的な住居を探す' },
   },
   {
     id: 'common_bank',
@@ -154,6 +256,14 @@ export const commonTasks: Task[] = [
     officialLinks: [],
     isCommon: true,
     updatedAt: '2025-06-01',
+    subTasks: [
+      { id: 'bank_research', title: '現地で人気の銀行・手続き方法を事前に調査する' },
+      { id: 'bank_docs', title: '必要書類（パスポート・住所証明・税番号等）を準備する' },
+      { id: 'bank_open', title: '銀行窓口またはアプリで口座を開設する' },
+      { id: 'bank_card', title: 'デビットカード・ネットバンキングを有効化する' },
+    ],
+    estimatedCost: { min: 0, max: 5000, note: '銀行によって手数料が異なる。無料の銀行も多い' },
+    estimatedDays: { min: 1, max: 14, note: '即日〜2週間。カード到着まで時間がかかる場合あり' },
   },
   {
     id: 'common_emergency',
@@ -166,5 +276,13 @@ export const commonTasks: Task[] = [
     ],
     isCommon: true,
     updatedAt: '2025-06-01',
+    subTasks: [
+      { id: 'emergency_embassy', title: '渡航先の在外公館（大使館・領事館）の連絡先を保存する' },
+      { id: 'emergency_insurance', title: '加入保険の緊急連絡先・証券番号を記録する' },
+      { id: 'emergency_family', title: '家族への緊急連絡手段を確認する（LINEなど）' },
+      { id: 'emergency_print', title: '連絡先リストを印刷してパスポートケースに入れる' },
+    ],
+    estimatedCost: { min: 0, max: 0, note: '費用不要' },
+    estimatedDays: { min: 1, max: 1, note: '30分〜1時間で完了' },
   },
 ]

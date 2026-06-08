@@ -13,6 +13,14 @@ export const deTasks: Task[] = [
     ],
     isCommon: false,
     updatedAt: '2025-06-01',
+    subTasks: [
+      { id: 'de_anm_address', title: '住所が確定したら最寄りのEinwohnermeldeamtを調べる' },
+      { id: 'de_anm_book', title: '予約を取る（オンライン予約が必要な市区町村が多い）' },
+      { id: 'de_anm_docs', title: 'パスポート・賃貸契約書（Wohnungsgeberbestätigung）を準備する' },
+      { id: 'de_anm_register', title: '窓口で登録手続きを行いMeldebescheinigungを受け取る' },
+    ],
+    estimatedCost: { min: 0, max: 0, note: '無料' },
+    estimatedDays: { min: 7, max: 28, note: '予約から窓口手続きまで1〜4週間かかる場合あり' },
   },
   {
     id: 'de_steuerid',
@@ -23,6 +31,13 @@ export const deTasks: Task[] = [
     officialLinks: [],
     isCommon: false,
     updatedAt: '2025-06-01',
+    subTasks: [
+      { id: 'de_steuer_wait', title: '住民登録後2〜4週間で自動的に郵送される' },
+      { id: 'de_steuer_save', title: 'Steuer-IDレターを大切に保管する' },
+      { id: 'de_steuer_request', title: '紛失・届かない場合はBundeszentralamt für Steuernに問い合わせる', isOptional: true },
+    ],
+    estimatedCost: { min: 0, max: 0, note: '無料' },
+    estimatedDays: { min: 14, max: 28, note: '住民登録後2〜4週間で郵送' },
   },
   {
     id: 'de_health',
@@ -35,6 +50,13 @@ export const deTasks: Task[] = [
     ],
     isCommon: false,
     updatedAt: '2025-06-01',
+    subTasks: [
+      { id: 'de_health_compare', title: '公的保険（TK・AOKなど）と私的保険を比較する' },
+      { id: 'de_health_apply', title: '保険会社に申し込む' },
+      { id: 'de_health_card', title: '保険証（Gesundheitskarte）を受け取る' },
+    ],
+    estimatedCost: { min: 20000, max: 50000, note: '月額。公的保険は給与の約14.6%（折半）' },
+    estimatedDays: { min: 1, max: 7, note: '申し込みから保険証到着まで即日〜1週間' },
   },
   {
     id: 'de_language',
@@ -45,5 +67,12 @@ export const deTasks: Task[] = [
     officialLinks: [],
     isCommon: false,
     updatedAt: '2025-06-01',
+    subTasks: [
+      { id: 'de_lang_app', title: 'DuolingoやBabbel等のアプリで基礎学習を始める' },
+      { id: 'de_lang_basics', title: '挨拶・数字・買い物の表現を習得する' },
+      { id: 'de_lang_course', title: '現地のVolkshochschuleで語学コースを受講する', isOptional: true },
+    ],
+    estimatedCost: { min: 0, max: 30000, note: 'アプリは無料〜月額数百円。語学コースは数万円' },
+    estimatedDays: { min: 30, max: 180, note: '基礎（A1）習得まで1〜6ヶ月' },
   },
 ]

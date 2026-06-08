@@ -12,6 +12,14 @@ export const auTasks: Task[] = [
     ],
     isCommon: false,
     updatedAt: '2025-06-01',
+    subTasks: [
+      { id: 'au_visa_account', title: 'ImmiAccountを作成する' },
+      { id: 'au_visa_docs', title: '必要書類（パスポート・証明写真・資金証明等）を準備する' },
+      { id: 'au_visa_apply', title: 'オンラインで申請を送信する' },
+      { id: 'au_visa_wait', title: '承認メールを待つ（通常数日以内）' },
+    ],
+    estimatedCost: { min: 635, max: 635, note: 'ビザ申請料 AUD635（円換算は為替による）' },
+    estimatedDays: { min: 1, max: 14, note: '通常即日〜数日で承認。混雑時は2週間程度かかる場合あり' },
   },
   {
     id: 'au_tfn',
@@ -25,6 +33,13 @@ export const auTasks: Task[] = [
     ],
     isCommon: false,
     updatedAt: '2025-06-01',
+    subTasks: [
+      { id: 'au_tfn_apply', title: 'ATOのウェブサイトからオンラインで申請する' },
+      { id: 'au_tfn_wait', title: 'TFNが郵送またはmyGovで通知されるのを待つ' },
+      { id: 'au_tfn_save', title: 'TFNを安全な場所に保管する（外部に教えすぎない）' },
+    ],
+    estimatedCost: { min: 0, max: 0, note: '無料' },
+    estimatedDays: { min: 14, max: 28, note: '申請から通知まで2〜4週間' },
   },
   {
     id: 'au_medicare',
@@ -37,6 +52,13 @@ export const auTasks: Task[] = [
     ],
     isCommon: false,
     updatedAt: '2025-06-01',
+    subTasks: [
+      { id: 'au_medicare_check', title: '日豪社会保障協定の対象であることを確認する' },
+      { id: 'au_medicare_apply', title: 'Services Australiaのオフィスで申請する' },
+      { id: 'au_medicare_card', title: 'Medicareカードを受け取る' },
+    ],
+    estimatedCost: { min: 0, max: 0, note: '無料' },
+    estimatedDays: { min: 1, max: 21, note: '申請後カード到着まで最大3週間' },
   },
   {
     id: 'au_second_visa',
@@ -49,6 +71,13 @@ export const auTasks: Task[] = [
     ],
     isCommon: false,
     updatedAt: '2025-06-01',
+    subTasks: [
+      { id: 'au_second_check', title: 'セカンドビザの対象業種・地域を確認する' },
+      { id: 'au_second_plan', title: '農業・漁業・建設業などの就労先を計画する' },
+      { id: 'au_second_record', title: '就労記録（88日分）をしっかり記録・保管する' },
+    ],
+    estimatedCost: { min: 635, max: 635, note: 'セカンドビザ申請料 AUD635' },
+    estimatedDays: { min: 88, max: 120, note: '88日以上の対象業種就労が必要' },
   },
   {
     id: 'au_super',
@@ -61,5 +90,12 @@ export const auTasks: Task[] = [
     ],
     isCommon: false,
     updatedAt: '2025-06-01',
+    subTasks: [
+      { id: 'au_super_check', title: '就労先のスーパーファンド（年金基金）名を確認する' },
+      { id: 'au_super_track', title: '積み立て額をATOのmyGovで定期的に確認する' },
+      { id: 'au_super_dasp', title: '帰国後にATOへDASP申請を行う' },
+    ],
+    estimatedCost: { min: 0, max: 0, note: '申請は無料。給与の11%が積み立てられ帰国時に受け取れる' },
+    estimatedDays: { min: 28, max: 90, note: '帰国後の申請から受け取りまで1〜3ヶ月' },
   },
 ]

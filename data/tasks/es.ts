@@ -12,6 +12,14 @@ export const esTasks: Task[] = [
     ],
     isCommon: false,
     updatedAt: '2025-06-01',
+    subTasks: [
+      { id: 'es_visa_docs', title: 'パスポート・写真・資金証明・保険証明・健康診断書等を準備する' },
+      { id: 'es_visa_book', title: '在日スペイン大使館で予約を取る' },
+      { id: 'es_visa_submit', title: '書類を提出してビザを申請する' },
+      { id: 'es_visa_receive', title: 'ビザを受け取る' },
+    ],
+    estimatedCost: { min: 12000, max: 15000, note: 'ビザ申請料 €80程度（円換算は為替による）' },
+    estimatedDays: { min: 30, max: 90, note: '申請から発行まで1〜3ヶ月' },
   },
   {
     id: 'es_nie',
@@ -25,6 +33,14 @@ export const esTasks: Task[] = [
     ],
     isCommon: false,
     updatedAt: '2025-06-01',
+    subTasks: [
+      { id: 'es_nie_book', title: 'Policía Nacionalのウェブサイトで予約を取る（cita previa）' },
+      { id: 'es_nie_docs', title: 'パスポート・写真・申請書（EX-15）・申請料領収書を準備する' },
+      { id: 'es_nie_apply', title: '警察署の窓口で申請する' },
+      { id: 'es_nie_receive', title: 'NIEが記載された証明書を受け取る' },
+    ],
+    estimatedCost: { min: 1500, max: 2500, note: '申請料 €10〜15（円換算は為替による）' },
+    estimatedDays: { min: 7, max: 28, note: '予約から窓口手続きまで1〜4週間' },
   },
   {
     id: 'es_empadronamiento',
@@ -37,6 +53,14 @@ export const esTasks: Task[] = [
     ],
     isCommon: false,
     updatedAt: '2025-06-01',
+    subTasks: [
+      { id: 'es_empad_book', title: '居住地のAyuntamiento（市役所）で予約を取る' },
+      { id: 'es_empad_docs', title: 'パスポート・NIE・賃貸契約書を準備する' },
+      { id: 'es_empad_register', title: '窓口で住民登録を完了する' },
+      { id: 'es_empad_cert', title: 'Certificado de Empadronamiento（住民票証明書）を受け取る' },
+    ],
+    estimatedCost: { min: 0, max: 0, note: '無料' },
+    estimatedDays: { min: 1, max: 7, note: '当日〜数日で完了' },
   },
   {
     id: 'es_seg_social',
@@ -49,6 +73,13 @@ export const esTasks: Task[] = [
     ],
     isCommon: false,
     updatedAt: '2025-06-01',
+    subTasks: [
+      { id: 'es_seg_check', title: '雇用主が手続きするか自分で申請するか確認する' },
+      { id: 'es_seg_apply', title: 'Tesorería General de la Seguridad Socialの窓口で申請する' },
+      { id: 'es_seg_number', title: '社会保障番号（NUSS）を受け取り記録する' },
+    ],
+    estimatedCost: { min: 0, max: 0, note: '無料' },
+    estimatedDays: { min: 1, max: 14, note: '窓口申請で即日〜2週間' },
   },
   {
     id: 'es_language',
@@ -59,5 +90,12 @@ export const esTasks: Task[] = [
     officialLinks: [],
     isCommon: false,
     updatedAt: '2025-06-01',
+    subTasks: [
+      { id: 'es_lang_app', title: 'DuolingoやBabbel等で基礎を学ぶ' },
+      { id: 'es_lang_basics', title: '挨拶・買い物・レストランの基本フレーズを習得する' },
+      { id: 'es_lang_course', title: '現地のInstituto Cervantes等で語学コースを受講する', isOptional: true },
+    ],
+    estimatedCost: { min: 0, max: 40000, note: 'アプリは無料。語学コースは数万円〜' },
+    estimatedDays: { min: 30, max: 180, note: '基礎（A1）習得まで1〜6ヶ月' },
   },
 ]
