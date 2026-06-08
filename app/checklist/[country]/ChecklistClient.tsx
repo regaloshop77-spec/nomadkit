@@ -26,8 +26,8 @@ interface ChecklistClientProps {
 
 export default function ChecklistClient({ countryId, countryData, tasks }: ChecklistClientProps) {
   const router = useRouter()
-  const [mode, setMode]               = useState<ModeType>('checklist')
-  const [activeFilter, setActiveFilter] = useState<FilterType>('all')
+  const [mode, setMode]                   = useState<ModeType>('checklist')
+  const [activeFilter, setActiveFilter]   = useState<FilterType>('all')
   const [showCustomForm, setShowCustomForm] = useState(false)
 
   const {
@@ -41,11 +41,13 @@ export default function ChecklistClient({ countryId, countryData, tasks }: Check
     toggleSubTask,
     totalEstimatedCost,
     checkedTaskCosts,
+    userCosts,
+    setUserCost,
     customTasks,
     addCustomTask,
     toggleCustomTask,
     deleteCustomTask,
-  } = useChecklist(countryId, tasks)
+  } = useChecklist(countryId, tasks, activeFilter)
 
   const filteredTasks =
     activeFilter === 'all' ? tasks : tasks.filter((t) => t.timing === activeFilter)
@@ -121,6 +123,7 @@ export default function ChecklistClient({ countryId, countryData, tasks }: Check
             totalEstimatedCost={totalEstimatedCost}
             checkedTaskCosts={checkedTaskCosts}
             customTaskCosts={customTaskCosts}
+            activeFilter={activeFilter}
           />
 
           <div className="mb-6">
@@ -136,6 +139,8 @@ export default function ChecklistClient({ countryId, countryData, tasks }: Check
                 onToggle={toggleTask}
                 subTaskCheckedState={subTaskCheckedState}
                 onToggleSubTask={toggleSubTask}
+                userCost={userCosts[task.id]}
+                onUserCostChange={setUserCost}
               />
             ))}
 

@@ -1,5 +1,7 @@
 import { useState, useEffect, useCallback } from 'react'
-import type { Task, ChecklistState, CustomTask } from '../types'
+import type { Task, ChecklistState, CustomTask, Timing } from '../types'
+
+type FilterType = 'all' | Timing
 
 interface UseChecklistReturn {
   checkedState: ChecklistState
@@ -15,6 +17,9 @@ interface UseChecklistReturn {
 
   totalEstimatedCost: number
   checkedTaskCosts: { taskId: string; title: string; cost: number }[]
+
+  userCosts: { [taskId: string]: number }
+  setUserCost: (taskId: string, cost: number) => void
 
   customTasks: CustomTask[]
   addCustomTask: (task: Omit<CustomTask, 'id' | 'createdAt' | 'isChecked'>) => void
@@ -40,20 +45,27 @@ function load<T>(key: string, fallback: T): T {
   return fallback
 }
 
-export function useChecklist(countryId: string, tasks: Task[]): UseChecklistReturn {
-  const checkKey = `nomadkit_checklist_${countryId}`
-  const subKey   = `nomadkit_subtasks_${countryId}`
-  const customKey = `nomadkit_custom_${countryId}`
+export function useChecklist(
+  countryId: string,
+  tasks: Task[],
+  activeFilter: FilterType = 'all',
+): UseChecklistReturn {
+  const checkKey    = `nomadkit_checklist_${countryId}`
+  const subKey      = `nomadkit_subtasks_${countryId}`
+  const customKey   = `nomadkit_custom_${countryId}`
+  const userCostKey = `nomadkit_usercosts_${countryId}`
 
-  const [checkedState, setCheckedState] = useState<ChecklistState>({})
+  const [checkedState, setCheckedState]           = useState<ChecklistState>({})
   const [subTaskCheckedState, setSubTaskCheckedState] = useState<{ [id: string]: boolean }>({})
-  const [customTasks, setCustomTasks] = useState<CustomTask[]>([])
+  const [customTasks, setCustomTasks]             = useState<CustomTask[]>([])
+  const [userCosts, setUserCosts]                 = useState<{ [taskId: string]: number }>({})
 
   useEffect(() => {
     setCheckedState(load(checkKey, {}))
     setSubTaskCheckedState(load(subKey, {}))
     setCustomTasks(load(customKey, []))
-  }, [checkKey, subKey, customKey])
+    setUserCosts(load(userCostKey, {}))
+  }, [checkKey, subKey, customKey, userCostKey])
 
   // --- main task ---
   const toggleTask = useCallback((taskId: string) => {
@@ -77,6 +89,15 @@ export function useChecklist(countryId: string, tasks: Task[]): UseChecklistRetu
       return next
     })
   }, [subKey])
+
+  // --- user costs ---
+  const setUserCost = useCallback((taskId: string, cost: number) => {
+    setUserCosts(prev => {
+      const next = { ...prev, [taskId]: cost }
+      persist(userCostKey, next)
+      return next
+    })
+  }, [userCostKey])
 
   // --- custom task ---
   const addCustomTask = useCallback((input: Omit<CustomTask, 'id' | 'createdAt' | 'isChecked'>) => {
@@ -110,14 +131,21 @@ export function useChecklist(countryId: string, tasks: Task[]): UseChecklistRetu
   }, [customKey])
 
   // --- derived ---
-  const totalCount = tasks.length
-  const completedCount = tasks.filter(t => checkedState[t.id]).length
+  const totalCount      = tasks.length
+  const completedCount  = tasks.filter(t => checkedState[t.id]).length
   const progressPercent = totalCount === 0 ? 0 : Math.round((completedCount / totalCount) * 100)
-  const isAllCompleted = totalCount > 0 && completedCount === totalCount
+  const isAllCompleted  = totalCount > 0 && completedCount === totalCount
 
   const checkedTaskCosts = tasks
-    .filter(t => checkedState[t.id] && t.estimatedCost && t.estimatedCost.max > 0)
-    .map(t => ({ taskId: t.id, title: t.title, cost: t.estimatedCost!.max }))
+    .filter(task => {
+      const timingMatch = activeFilter === 'all' || task.timing === activeFilter
+      return timingMatch && checkedState[task.id] && task.estimatedCost && task.estimatedCost.max > 0
+    })
+    .map(task => ({
+      taskId: task.id,
+      title: task.title,
+      cost: userCosts[task.id] ?? task.estimatedCost!.max,
+    }))
 
   const totalEstimatedCost = checkedTaskCosts.reduce((sum, t) => sum + t.cost, 0)
 
@@ -133,6 +161,8 @@ export function useChecklist(countryId: string, tasks: Task[]): UseChecklistRetu
     toggleSubTask,
     totalEstimatedCost,
     checkedTaskCosts,
+    userCosts,
+    setUserCost,
     customTasks,
     addCustomTask,
     toggleCustomTask,

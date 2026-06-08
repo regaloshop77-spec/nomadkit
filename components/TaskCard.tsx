@@ -9,6 +9,8 @@ interface TaskCardProps {
   onToggle: (taskId: string) => void
   subTaskCheckedState: { [subTaskId: string]: boolean }
   onToggleSubTask: (subTaskId: string) => void
+  userCost?: number
+  onUserCostChange?: (taskId: string, cost: number) => void
 }
 
 const timingBadge: Record<Task['timing'], { label: string; className: string }> = {
@@ -35,6 +37,8 @@ export default function TaskCard({
   onToggle,
   subTaskCheckedState,
   onToggleSubTask,
+  userCost,
+  onUserCostChange,
 }: TaskCardProps) {
   const [subExpanded, setSubExpanded] = useState(false)
   const badge = timingBadge[task.timing]
@@ -42,6 +46,9 @@ export default function TaskCard({
 
   const subTasks = task.subTasks ?? []
   const subCompletedCount = subTasks.filter(s => subTaskCheckedState[s.id]).length
+
+  const hasCost = !!task.estimatedCost
+  const isFree  = hasCost && task.estimatedCost!.max === 0
 
   return (
     <div
@@ -84,30 +91,59 @@ export default function TaskCard({
             </span>
           </div>
 
-          {/* 費用・期間バッジ */}
-          {(task.estimatedCost || task.estimatedDays) && (
+          {/* 費用・期間バッジ（未チェック時 or 無料） */}
+          {hasCost && (!isChecked || isFree) && (
             <div className="flex flex-wrap gap-2 mb-2">
-              {task.estimatedCost && (
-                <div>
-                  <span className="text-xs bg-emerald-50 text-emerald-700 rounded px-2 py-1 inline-block">
-                    {task.estimatedCost.max === 0
-                      ? '💰 費用：無料'
-                      : `💰 費用目安：${formatCost(task.estimatedCost.min)} 〜 ${formatCost(task.estimatedCost.max)}`}
-                  </span>
-                  {task.estimatedCost.note && (
-                    <p className="text-xs text-gray-400 mt-0.5 pl-1">{task.estimatedCost.note}</p>
-                  )}
-                </div>
-              )}
-              {task.estimatedDays && (
-                <div>
-                  <span className="text-xs bg-blue-50 text-blue-700 rounded px-2 py-1 inline-block">
-                    {`⏱ 期間目安：${task.estimatedDays.min}〜${task.estimatedDays.max}日`}
-                  </span>
-                  {task.estimatedDays.note && (
-                    <p className="text-xs text-gray-400 mt-0.5 pl-1">{task.estimatedDays.note}</p>
-                  )}
-                </div>
+              <div>
+                <span className="text-xs bg-emerald-50 text-emerald-700 rounded px-2 py-1 inline-block">
+                  {isFree
+                    ? '💰 費用：無料'
+                    : `💰 費用目安：${formatCost(task.estimatedCost!.min)} 〜 ${formatCost(task.estimatedCost!.max)}`}
+                </span>
+                {task.estimatedCost!.note && (
+                  <p className="text-xs text-gray-400 mt-0.5 pl-1">{task.estimatedCost!.note}</p>
+                )}
+              </div>
+            </div>
+          )}
+
+          {/* 費用入力欄（チェック済み & 有料タスク） */}
+          {hasCost && isChecked && !isFree && (
+            <div className="mt-2 p-3 bg-emerald-50 border border-emerald-200 rounded-lg mb-2">
+              <p className="text-xs text-emerald-700 mb-1">
+                💰 この準備にかかった（かかる予定の）費用を入力してください
+              </p>
+              <p className="text-xs text-gray-400 mb-1">
+                目安：{formatCost(task.estimatedCost!.min)} 〜 {formatCost(task.estimatedCost!.max)}
+                {task.estimatedCost!.note && `（${task.estimatedCost!.note}）`}
+              </p>
+              <div className="flex items-center gap-1">
+                <span className="text-sm text-gray-600">¥</span>
+                <input
+                  type="number"
+                  min={0}
+                  value={userCost ?? task.estimatedCost!.max}
+                  onChange={e => onUserCostChange?.(task.id, Number(e.target.value))}
+                  className="w-full text-sm border border-emerald-300 rounded px-2 py-1 bg-white focus:outline-none focus:ring-2 focus:ring-emerald-300"
+                />
+              </div>
+              <button
+                onClick={() => onUserCostChange?.(task.id, task.estimatedCost!.max)}
+                className="text-xs text-blue-600 underline mt-1"
+              >
+                目安の金額を使う
+              </button>
+            </div>
+          )}
+
+          {/* 期間バッジ */}
+          {task.estimatedDays && (
+            <div className="mb-2">
+              <span className="text-xs bg-blue-50 text-blue-700 rounded px-2 py-1 inline-block">
+                {`⏱ 期間目安：${task.estimatedDays.min}〜${task.estimatedDays.max}日`}
+              </span>
+              {task.estimatedDays.note && (
+                <p className="text-xs text-gray-400 mt-0.5 pl-1">{task.estimatedDays.note}</p>
               )}
             </div>
           )}
