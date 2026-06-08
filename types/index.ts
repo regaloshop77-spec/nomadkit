@@ -62,3 +62,27 @@ export interface CustomTask {
   isChecked: boolean
   createdAt: string         // "YYYY-MM-DD"
 }
+
+export type LuggageCategory =
+  | 'documents'
+  | 'clothes'
+  | 'electronics'
+  | 'medicine'
+  | 'money'
+  | 'other'
+
+export interface LuggageItem {
+  id: string
+  title: string
+  category: LuggageCategory
+  isEssential: boolean
+  note?: string
+}
+
+export interface CustomLuggageItem {
+  id: string                // "luggage_custom_" + timestamp
+  title: string
+  category: LuggageCategory
+  note?: string
+  createdAt: string
+}
