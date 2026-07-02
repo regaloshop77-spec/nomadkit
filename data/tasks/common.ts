@@ -125,7 +125,7 @@ export const commonTasks: Task[] = [
     timing: 'before_recommended',
     requiresOfficialConfirm: false,
     officialLinks: [],
-    affiliate: { label: 'eSIMを見る', url: 'https://example.com/sim' },
+    affiliate: { label: '現地eSIMを見る（eSIM-san）', url: 'https://h.accesstrade.net/sp/cc?rk=0100prr900otvt' },
     isCommon: true,
     updatedAt: '2025-06-01',
     subTasks: [
@@ -144,7 +144,7 @@ export const commonTasks: Task[] = [
     timing: 'before_recommended',
     requiresOfficialConfirm: false,
     officialLinks: [],
-    affiliate: { label: 'おすすめVPNを見る', url: 'https://example.com/vpn' },
+    affiliate: { label: 'MillenVPNを見る', url: 'https://h.accesstrade.net/sp/cc?rk=0100pzo400otvt' },
     isCommon: true,
     updatedAt: '2025-06-01',
     subTasks: [
